@@ -1,9 +1,9 @@
-name: Deploy schedule.json + Svelte to GitHub Pages
+name: Deploy schedule.json and Svelte to GitHub Pages
 
 on:
   schedule:
-    #- cron: 0 * * * * # every 1 hour
-    - cron: 0 10-02 * * * # 7-23
+    #- cron: '0 * * * *' # every 1 hour
+    - cron: '0 10-02 * * *' # 7-23
   workflow_dispatch:
 
 jobs:
