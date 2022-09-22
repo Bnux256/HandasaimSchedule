@@ -28,7 +28,7 @@ def get_row(worksheet, starting_cell):
   
 @functions_framework.http
 def get_req(request):
-    #download_xlsx(XLSX_URL)
+    download_xlsx(XLSX_URL)
     ws = openpyxl.load_workbook(filename=XLSX_FILENAME).worksheets[0]
         
     table_start: str = request.args.get('table_start') or DEFAULT_TABLE_START
@@ -41,5 +41,5 @@ def get_req(request):
         print(chosen_class)
         hours = get_col(worksheet=ws, starting_cell=ws[DEFAULT_TABLE_START]) 
         class_schedule = get_col(worksheet=ws, starting_cell=classes[chosen_class])
-        response = {hour: lesson for hour, lesson in zip(hours, class_schedule)}
+        response = [[hour, lesson] for hour, lesson in zip(hours, class_schedule)]
     return response, 200, {'Access-Control-Allow-Origin': '*'}
