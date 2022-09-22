@@ -1,0 +1,37 @@
+name: Deploy schedule.json + Svelte to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10' # install the python version needed
+          
+      - name: install python packages
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      
+      - name: create schedule.json file:
+        run: python3 main.py
+        
+      - name: Install and Build Svelte Frontend
+        run: |
+          cd frontend
+          npm install
+          npm run build
+          
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@4.1.5
+        with:
+          branch: gh-pages
+          folder: frontend/public
