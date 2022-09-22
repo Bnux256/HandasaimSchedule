@@ -22,7 +22,7 @@ jobs:
           python3 -m pip install --upgrade pip
           pip3 install -r requirements.txt
       
-      - name: create schedule.json file:
+      - name: create schedule.json file
         run: python3 main.py
         
       - name: Install and Build Svelte Frontend
