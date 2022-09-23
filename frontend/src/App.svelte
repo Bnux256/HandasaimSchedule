@@ -26,7 +26,6 @@
 
 	<div id="button-container">
 		{#each classes as cur_class}
-
 		<button on:click={get_schedule(cur_class)}>
 			{cur_class}
 		</button>
@@ -36,11 +35,16 @@
 	
 	<!-- print schedule -->
 	<table class="center">
-		<tr>
-			<th colspan="2">
-				{schedule["date"]}
-			</th>
-		</tr>
+		<!-- print date -->
+		{#if cur_schedule.length > 0}
+			<tr>
+				<th colspan="2">
+					{schedule["date"]}
+				</th>
+			</tr>
+		{/if}
+		
+		<!-- Print all lessons -->
 		{#each cur_schedule as [i, lesson]}
 			<tr>
 				<th>{i}</th>
