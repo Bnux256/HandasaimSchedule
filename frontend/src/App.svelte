@@ -1,25 +1,21 @@
 <script>
 
 	// get list of classes
-	let classes = [];
-	const url = "http://localhost:8000/?getClasses=true";
+	let schedule = new Object();
+	let classes = []
+	const url = "http://localhost:8080/schedule.json";
 	fetch(url).then((response) => {
 		return response.json();
 	}).then((data) => {
-	console.log(data);
-		classes = data;
+		schedule = data;
+		classes = Object.keys(schedule)
+		classes.shift() // removing first element - date
+
 })
 
-	let schedule = [];
+	let cur_schedule = []
 	function get_schedule(chosen_class) {
-		const url = `http://localhost:8000/?class=${chosen_class}`;
-		fetch(url).then((response) => {
-		return response.json();
-		}).then((data) => {
-			console.log(data);
-			schedule = data;
-		})
-		console.log(schedule)
+		cur_schedule = schedule[chosen_class]
 	}
 </script>
 
@@ -28,17 +24,24 @@
 	<h4>לקוח לא רשמי למערכת של תיכון הנדסאים הרצליה.</h4>
 	<br>
 
-	{#each classes as cur_class}
-	<!-- <a target="_blank" href="http://localhost:8000/?class={cur_class}">{cur_class}</a> -->
-	<button on:click={get_schedule(cur_class)}>
-		{cur_class}
-	</button>
-	{/each}	
+	<div id="button-container">
+		{#each classes as cur_class}
+
+		<button on:click={get_schedule(cur_class)}>
+			{cur_class}
+		</button>
+		{/each}	
+	</div>
 
 	
 	<!-- print schedule -->
 	<table class="center">
-		{#each schedule as [i, lesson]}
+		<tr>
+			<th colspan="2">
+				{schedule["date"]}
+			</th>
+		</tr>
+		{#each cur_schedule as [i, lesson]}
 			<tr>
 				<th>{i}</th>
 				{#if lesson!==null}
@@ -58,14 +61,14 @@
 	main {
 		text-align: center;
 		padding: 1em;
-		max-width: 240px;
+		/* max-width: 240px; */
 		margin: 0 auto;
 	}
 
 	h1 {
 		color: #8400ff;
 		text-transform: uppercase;
-		font-size: 4em;
+		font-size: 3em;
 		font-weight: 100;
 	}
 
@@ -78,5 +81,9 @@
 	.center {
   		margin-left: auto;
   		margin-right: auto;
+	}
+
+	button {
+		padding: 0.5em;
 	}
 </style>
