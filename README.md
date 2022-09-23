@@ -1,5 +1,5 @@
 # HandasaimSchedule
-Client for the Handasaim School schedule. Using serverless functions and Svelte
+Client for the Handasaim School schedule. Using Github Actions as the backend and Svelte frontend.
 
 
 # Development - 
@@ -11,9 +11,9 @@ npm run dev
 ```
 start serverless function localy-
 ```
-cd api
+cd backend
 python3 -m venv env
 source env/bin/activate
 pip3 install -r requirments
-functions_framework --target get_req --port 8000 --debug
+python3 main.py
 ```
