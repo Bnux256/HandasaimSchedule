@@ -16,6 +16,15 @@
 	let cur_schedule = []
 	function get_schedule(chosen_class) {
 		cur_schedule = schedule[chosen_class]
+
+		// anlytics - 
+	const query = new URLSearchParams({
+		p: 'a0d80866-f248-4bf4-9e75-4dd1a01a4a52',
+		i: chosen_class,
+	})
+
+	fetch(`https://app.piratepx.com/ship?${query.toString()}`)
+
 	}
 </script>
 
@@ -52,7 +61,7 @@
 			</tr>
 		{/each}
 	</table>
-	
+
 	<footer>
 		<p><a href="https://github.com/Bnux256/HandasaimSchedule">אודות הפרויקט</a></p>
 		<p><a href="https://handasaim.co.il/2020/07/16/%d7%9e%d7%a2%d7%a8%d7%9b%d7%aa-%d7%99%d7%95%d7%9e%d7%99%d7%aa/">קישור למערכת המקורית</a></p>
