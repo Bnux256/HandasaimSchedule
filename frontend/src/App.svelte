@@ -3,7 +3,7 @@
 	// get list of classes
 	let schedule = new Object();
 	let classes = []
-	const url = "http://localhost:8080/schedule.json";
+	const url = "https://bnux256.github.io/HandasaimSchedule/schedule.json";
 	fetch(url).then((response) => {
 		return response.json();
 	}).then((data) => {
