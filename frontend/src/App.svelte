@@ -3,7 +3,7 @@
 	// get list of classes
 	let schedule = new Object();
 	let classes = []
-	const url = "https://bnux256.github.io/HandasaimSchedule/schedule.json";
+	const url = "./schedule.json";
 	fetch(url).then((response) => {
 		return response.json();
 	}).then((data) => {
@@ -24,13 +24,11 @@
 	<h4>לקוח לא רשמי למערכת של תיכון הנדסאים הרצליה.</h4>
 	<br>
 
-	<div id="button-container">
-		{#each classes as cur_class}
-		<button on:click={get_schedule(cur_class)}>
-			{cur_class}
-		</button>
-		{/each}	
-	</div>
+	{#each classes as cur_class}
+	<button on:click={get_schedule(cur_class)}>
+		{cur_class}
+	</button>
+	{/each}	
 
 	
 	<!-- print schedule -->
