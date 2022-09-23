@@ -6,6 +6,7 @@ import json
 # add conf.json
 XLSX_URL: str = r'https://docs.google.com/spreadsheets/d/1Eq3CQgjbVGXv0DXgsztmfax6JWu8iYH3/export?format=xlsx'
 XLSX_FILENAME: str = 'schedule.xlsx'
+OUTPUT_FILE: str = "frontend/public/schedule.json"
 TABLE_START: str = 'A5'
 DATE_CELL: str = "A3"
 
@@ -36,7 +37,7 @@ def main():
         class_schedule = get_col(worksheet=ws, starting_cell=classes[cur_class])
         schedule[cur_class] =  [[hour, lesson] for hour, lesson in zip(hours, class_schedule)]
 
-    with open('schedule.json', "w") as outputFile:
+    with open(OUTPUT_FILE, "w") as outputFile:
         json.dump(schedule, outputFile)
 
 if __name__ == "__main__":
