@@ -54,9 +54,9 @@
     <!-- Print all lessons -->
     {#each cur_schedule as [i, lesson]}
       <tr>
-        <th>{i}</th>
+        <td>{i}</td>
         {#if lesson !== null}
-          <th>{lesson}</th>
+          <td>{lesson}</td>
         {/if}
       </tr>
     {/each}
