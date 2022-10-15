@@ -28,17 +28,19 @@
 </script>
 
 <main>
-  <h1>מערכת שעות יומית - תיכון הנדסאים</h1>
-  <h4>לקוח לא רשמי למערכת של תיכון הנדסאים הרצליה.</h4>
-  <br />
+  <h1>מערכת שעות יומית הנדסאים</h1>
+  <p class="subtitle">מביא לכם את המערכת העדכנית של היום בצורה נוחה.</p>
+  <p>
+    <br/>
 
-  {#each classes as cur_class}
-    <button on:click={get_schedule(cur_class)}>
-      {cur_class}
-    </button>
-  {/each}
+    {#each classes as cur_class}
+      <button on:click={get_schedule(cur_class)}>
+        {cur_class}
+      </button>
+    {/each}
 
-  <!-- print schedule -->
+    <!-- print schedule -->
+  </p>
   <table class="center">
     <!-- print date -->
     {#if cur_schedule.length > 0}
@@ -52,39 +54,58 @@
     <!-- Print all lessons -->
     {#each cur_schedule as [i, lesson]}
       <tr>
-        <th>{i}</th>
+        <td>{i}</td>
         {#if lesson !== null}
-          <th>{lesson}</th>
+          <td>{lesson}</td>
         {/if}
       </tr>
     {/each}
   </table>
 
   <footer>
-    <p>
-      <a href="https://github.com/Bnux256/HandasaimSchedule">אודות הפרויקט</a>
-    </p>
-    <p>
-      <a
-        href="https://handasaim.co.il/2020/07/16/%d7%9e%d7%a2%d7%a8%d7%9b%d7%aa-%d7%99%d7%95%d7%9e%d7%99%d7%aa/"
-        >קישור למערכת המקורית</a
-      >
-    </p>
+    <ul>
+      <li><a href="https://github.com/Bnux256/HandasaimSchedule">אודות</a></li>
+      <li>
+        <a
+          href="https://handasaim.co.il/2020/07/16/%d7%9e%d7%a2%d7%a8%d7%9b%d7%aa-%d7%99%d7%95%d7%9e%d7%99%d7%aa/"
+          >למערכת המקורית</a
+        >
+      </li>
+    </ul>
   </footer>
 </main>
 
 <style>
+  :global(body) {
+    padding-left: 0em;
+    padding-right: 0em;
+    padding-top: 2em;
+    padding-bottom: 0em;
+  }
+
+  footer ul {
+    list-style-type: none;
+    display: inline-flex;
+  }
+
+  footer ul li {
+    padding: 0em 1em;
+  }
+
   main {
     text-align: center;
-    padding: 1em;
     margin: 0 auto;
   }
 
   h1 {
     color: #8400ff;
-    text-transform: uppercase;
-    font-size: 3em;
+    font-size: 1.5em;
     font-weight: 100;
+    padding: 0em 1em;
+    font-family: sans-serif;
+    margin: 0;
+    margin-block-start: 0;
+    margin-block-end: 0;
   }
 
   @media (min-width: 640px) {
@@ -100,5 +121,11 @@
 
   button {
     padding: 0.5em;
+  }
+
+  p.subtitle {
+    padding-top: 0em;
+    padding-bottom: 0.2em;
+    margin: 0em;
   }
 </style>
