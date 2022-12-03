@@ -3,34 +3,35 @@ permissions:
   contents: write
 on:
   schedule:
-    - cron: '0 * * * *' # every 1 hour
-    #- cron: '0 10-02 * * *' # 7-23
-
+    # - cron: '0 * * * *' # every 1 hour
+    # local time cron schedule
+    # sunday to thursday: 10 14 15 16 17 18 20 23
+    - cron: '0 8,12,13,14,15,16,19 * * 0-4'
+    # friday: 10 12 13 14 16 18 22
+    - cron: '0 8,10,11,12,14,16,20 * * 5'
+    # saturday: 9 14 18 22
+    - cron: '0 7,12,16,20 * * 6'
+  workflow_dispatch:
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      
       - name: setup python
         uses: actions/setup-python@v4
         with:
           python-version: '3.10' # install the python version needed
-          
       - name: install python packages
         run: |
           python3 -m pip install --upgrade pip
           pip3 install -r backend/requirements.txt
-      
       - name: create schedule.json file
         run: python3 backend/main.py
-        
       - name: Install and Build Svelte Frontend
         run: |
           cd frontend
           npm install
           npm run build
-          
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
