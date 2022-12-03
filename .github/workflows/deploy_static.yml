@@ -1,4 +1,6 @@
 name: Deploy schedule.json and Svelte to GitHub Pages
+permissions:
+  contents: write
 on:
   schedule:
     # - cron: '0 * * * *' # every 1 hour
@@ -10,12 +12,11 @@ on:
     # saturday: 9 14 18 22
     - cron: '0 7,12,16,20 * * 6'
   workflow_dispatch:
-
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: setup python
         uses: actions/setup-python@v4
         with:
@@ -32,7 +33,7 @@ jobs:
           npm install
           npm run build
       - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@4.1.5
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
           folder: frontend/public
