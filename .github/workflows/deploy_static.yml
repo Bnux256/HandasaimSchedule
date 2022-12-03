@@ -27,11 +27,6 @@ jobs:
           pip3 install -r backend/requirements.txt
       - name: create schedule.json file
         run: python3 backend/main.py
-      - name: Install and Build Svelte Frontend
-        run: |
-          cd frontend
-          npm install
-          npm run build
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
