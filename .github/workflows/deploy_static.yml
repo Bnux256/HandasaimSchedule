@@ -20,7 +20,7 @@ jobs:
       - name: setup python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.10' # install the python version needed
+          python-version: '3.11' # install the python version needed
           cache: 'pip'
       - name: install python packages
         run: pip3 install -r backend/requirements.txt
