@@ -1,4 +1,4 @@
-name: Deploy schedule.json and Svelte to GitHub Pages
+name: Deploy schedule.json to GitHub Pages
 permissions:
   contents: write
 on:
