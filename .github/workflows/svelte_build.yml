@@ -13,20 +13,16 @@ jobs:
       - name: setup python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.10' # install the python version needed
+          python-version: '3.11' # install the python version needed
+          cache: 'pip'
       - name: install python packages
-        run: |
-          python3 -m pip install --upgrade pip
-          pip3 install -r backend/requirements.txt
+        run: pip3 install -r backend/requirements.txt
       - name: create schedule.json file
         run: python3 backend/main.py
-      - name: Install and Build Svelte Frontend
-        run: |
-          cd frontend
-          npm install
-          npm run build
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
           folder: frontend/public
+          single-commit: true
+          clean: false
