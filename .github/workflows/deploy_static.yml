@@ -31,3 +31,5 @@ jobs:
         with:
           branch: gh-pages
           folder: frontend/public
+          single-commit: true
+          clean: false
