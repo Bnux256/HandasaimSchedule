@@ -3,7 +3,7 @@
   let schedule = new Object();
   let classes = [];
   const url = "./schedule.json";
-  fetch(url)
+  fetch(url, {cache: "no-store"})
     .then((response) => {
       return response.json();
     })
