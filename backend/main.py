@@ -1,9 +1,9 @@
-import requests
 import openpyxl
 import json
+import gdown
 
 # add conf.json
-XLSX_URL: str = r'https://docs.google.com/spreadsheets/d/1Eq3CQgjbVGXv0DXgsztmfax6JWu8iYH3/export?format=xlsx'
+XLSX_URL: str = r'https://docs.google.com/spreadsheets/d/1W5znKQixeRJeg_IwiLoUFN8cqcStC44L/export?format=xlsx'
 XLSX_FILENAME: str = 'schedule.xlsx'
 OUTPUT_FILE: str = "frontend/dist/schedule.json"
 TABLE_START: str = 'A5'
@@ -11,9 +11,7 @@ DATE_CELL: str = "A3"
 
 
 def download_xlsx(url: str) -> None:
-    req = requests.get(url, allow_redirects=True)
-    with open(XLSX_FILENAME, 'wb') as f:
-        f.write(req.content)
+    gdown.download(url=XLSX_URL, output=XLSX_FILENAME, fuzzy=True)
     print(f'{XLSX_FILENAME} saved.')
 
 
