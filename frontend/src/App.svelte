@@ -1,22 +1,35 @@
 <script>
-  // get list of classes
-  let schedule = new Object();
-  let classes = [];
-  const url = "./schedule.json";
-  fetch(url)
-    .then((response) => {
-      return response.json();
-    })
-    .then((data) => {
-      schedule = data;
-      classes = Object.keys(schedule);
-      classes.shift(); // removing first element - date
-    });
-
-  let cur_schedule = [];
+  export let schedule, classes;
+  function download_schedule() {
+    // get list of classes
+    schedule = new Object();
+    classes = [];
+    const url = "./schedule.json";
+    fetch(url, {cache: "no-store"})
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        schedule = data;
+        classes = Object.keys(schedule);
+        classes.shift(); // removing first element - date
+      });
+  }
+  
+  let download_time = (new Date()).getTime();
+  download_schedule();
+  export let cur_schedule = [];
   function get_schedule(chosen_class) {
-    cur_schedule = schedule[chosen_class];
+    // if time expired update the schedule
+    let cur_time = (new Date()).getTime();
+    // if older than 5 minutes we download again
+    if ((cur_time - download_time) > 5*60_000) { 
+      download_schedule();
+      download_time = cur_time;
+    }
 
+    cur_schedule = schedule[chosen_class];
+  
     // anlytics -
     const query = new URLSearchParams({
       p: "a0d80866-f248-4bf4-9e75-4dd1a01a4a52",
@@ -42,6 +55,7 @@
     <!-- print schedule -->
   </p>
   <table class="center">
+    {#if typeof cur_schedule !== 'undefined'}
     <!-- print date -->
     {#if cur_schedule.length > 0}
       <tr>
@@ -60,6 +74,7 @@
         {/if}
       </tr>
     {/each}
+    {/if}
   </table>
 
   <footer>

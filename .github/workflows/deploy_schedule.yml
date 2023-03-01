@@ -25,11 +25,11 @@ jobs:
       - name: install python packages
         run: pip3 install -r backend/requirements.txt
       - name: create schedule.json file
-        run: python3 backend/main.py
+        run: mkdir frontend/dist/ && python3 backend/main.py
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
-          folder: frontend/public
+          folder: frontend/dist
           single-commit: true
           clean: false

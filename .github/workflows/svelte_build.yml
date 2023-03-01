@@ -2,6 +2,7 @@ name: Deploy Svelte to GitHub Pages
 permissions:
   contents: write
 on:
+  pull_request:
   push:
     branches: [main]
   workflow_dispatch:
@@ -10,6 +11,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: Install and Build
+        run: |
+          cd frontend
+          npm ci
+          npm run build
+          cd ..
       - name: setup python
         uses: actions/setup-python@v4
         with:
@@ -23,6 +30,6 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
-          folder: frontend/public
+          folder: frontend/dist
           single-commit: true
           clean: false
