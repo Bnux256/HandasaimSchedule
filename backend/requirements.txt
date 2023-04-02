@@ -1,2 +1,2 @@
-gdown~=4.6.4
+gdown~=4.7.1
 openpyxl~=3.1.2
