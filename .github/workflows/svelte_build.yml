@@ -4,7 +4,7 @@ permissions:
 on:
   pull_request:
   push:
-    branches: [main]
+    branches: [main, githubActionsBackend]
   workflow_dispatch:
 jobs:
   build:
