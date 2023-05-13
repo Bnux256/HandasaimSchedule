@@ -4,7 +4,7 @@
     // get list of classes
     schedule = new Object();
     classes = [];
-    const url = "./schedule.json";
+    const url = "./api/schedule";
     fetch(url, {cache: "no-store"})
       .then((response) => {
         return response.json();
@@ -29,14 +29,6 @@
     }
 
     cur_schedule = schedule[chosen_class];
-  
-    // anlytics -
-    const query = new URLSearchParams({
-      p: "a0d80866-f248-4bf4-9e75-4dd1a01a4a52",
-      i: chosen_class,
-    });
-
-    fetch(`https://app.piratepx.com/ship?${query.toString()}`);
   }
 </script>
 

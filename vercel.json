@@ -1,0 +1,5 @@
+{
+    "routes": [
+      { "src": "/api/schedule", "dest": "/api/main.py" }
+    ]
+  }
