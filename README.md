@@ -1,4 +1,5 @@
 # HandasaimSchedule
+## This Branch is a legacy branch which was used when the project used Github Action Cron to fetch the schedule. As of writing this, the project uses Vercel Serverless functions for the backend instead. This is more efficient and allows a better overall user experience. This branch works, to use it enable the Actions workflows in actions tab.
 Client for the daily updates of the Handasaim School schedule. Using Github Actions as the backend and Svelte frontend.
 Every hour a cron github actions creates a json file with the current schedule and builds the static frontend.
 
