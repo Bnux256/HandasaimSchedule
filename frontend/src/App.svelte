@@ -1,33 +1,19 @@
 <script>
   export let schedule, classes;
-  function download_schedule() {
+  async function download_schedule() {
     // get list of classes
-    schedule = new Object();
     classes = [];
     const url = "./api/schedule";
-    fetch(url, {cache: "no-store"})
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        schedule = data;
-        classes = Object.keys(schedule);
-        classes.shift(); // removing first element - date
-      });
+    const data = await fetch(url, { cache: "no-store" });
+    schedule = await data.json();
+    classes = Object.keys(schedule);
+    classes.shift(); // removing first element - date
   }
-  
-  let download_time = (new Date()).getTime();
+
   download_schedule();
+  setInterval(download_schedule, 5 * 60_000); // Refresh Schedule every 5 minutes
   export let cur_schedule = [];
   function get_schedule(chosen_class) {
-    // if time expired update the schedule
-    let cur_time = (new Date()).getTime();
-    // if older than 5 minutes we download again
-    if ((cur_time - download_time) > 5*60_000) { 
-      download_schedule();
-      download_time = cur_time;
-    }
-
     cur_schedule = schedule[chosen_class];
   }
 </script>
@@ -36,7 +22,7 @@
   <h1>מערכת שעות יומית הנדסאים</h1>
   <p class="subtitle">מביא לכם את המערכת העדכנית של היום בצורה נוחה.</p>
   <p>
-    <br/>
+    <br />
 
     {#each classes as cur_class}
       <button on:click={get_schedule(cur_class)}>
@@ -47,25 +33,32 @@
     <!-- print schedule -->
   </p>
   <table class="center">
-    {#if typeof cur_schedule !== 'undefined'}
-    <!-- print date -->
-    {#if cur_schedule.length > 0}
-      <tr>
-        <th colspan="2">
-          {schedule["date"]}
-        </th>
-      </tr>
+    {#if typeof cur_schedule == "undefined"}
+    <tr>
+      <th colspan="2">
+        המערכת בטעינה...
+      </th>
+    </tr>
     {/if}
+    {#if typeof cur_schedule !== "undefined"}
+      <!-- print date -->
+      {#if cur_schedule.length > 0}
+        <tr>
+          <th colspan="2">
+            {schedule["date"]}
+          </th>
+        </tr>
+      {/if}
 
-    <!-- Print all lessons -->
-    {#each cur_schedule as [i, lesson]}
-      <tr>
-        <td>{i}</td>
-        {#if lesson !== null}
-          <td>{lesson}</td>
-        {/if}
-      </tr>
-    {/each}
+      <!-- Print all lessons -->
+      {#each cur_schedule as [i, lesson]}
+        <tr>
+          <td>{i}</td>
+          {#if lesson !== null}
+            <td>{lesson}</td>
+          {/if}
+        </tr>
+      {/each}
     {/if}
   </table>
 
