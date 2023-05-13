@@ -1,18 +1,25 @@
 import openpyxl
-import json
-import gdown
+import requests
+from flask import Flask, make_response
 
 # add conf.json
 XLSX_URL: str = r'https://docs.google.com/spreadsheets/d/1W5znKQixeRJeg_IwiLoUFN8cqcStC44L/export?format=xlsx'
-XLSX_FILENAME: str = 'schedule.xlsx'
-OUTPUT_FILE: str = "frontend/dist/schedule.json"
+XLSX_FILENAME: str = '/tmp/schedule.xlsx'
 TABLE_START: str = 'A5'
 DATE_CELL: str = "A3"
 
+app = Flask(__name__)
 
+@app.route('/api/schedule')
+def schedule():
+    resp = make_response(create_schedule())
+    resp.headers["Cache-Control"] = "max-age=0, s-maxage=1000"
+    return resp
+
+    
 def download_xlsx(url: str) -> None:
-    gdown.download(url=XLSX_URL, output=XLSX_FILENAME, fuzzy=True)
-    print(f'{XLSX_FILENAME} saved.')
+    with open(XLSX_FILENAME, "wb") as f:
+        f.write(requests.get(XLSX_URL).content)
 
 
 def get_col(worksheet, starting_cell):
@@ -23,7 +30,7 @@ def get_row(worksheet, starting_cell):
     return {cell.value: cell for cell in list(worksheet[starting_cell.row]) if cell.column > starting_cell.column}
 
 
-def main():
+def create_schedule() -> dict[str, str]:
     download_xlsx(XLSX_URL)
     ws = openpyxl.load_workbook(filename=XLSX_FILENAME).worksheets[0]
     classes = get_row(worksheet=ws, starting_cell=ws[TABLE_START])
@@ -37,9 +44,5 @@ def main():
         schedule[cur_class] = [[hour, lesson]
                                for hour, lesson in zip(hours, class_schedule)]
 
-    with open(OUTPUT_FILE, "w") as outputFile:
-        json.dump(schedule, outputFile)
+    return schedule
 
-
-if __name__ == "__main__":
-    main()
