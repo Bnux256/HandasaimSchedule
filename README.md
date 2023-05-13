@@ -8,6 +8,10 @@ In the XLSX file check if the empty cell that starts the table is correct and th
 Make sure that XLSX_URL hasn't changed. If it did, find the new one by going to the school site Google Sheet Schedule and set the XLSX_url to the url with the export?format=xlsx query without the id. i.e: 
 https://docs.google.com/spreadsheets/d/1Eq3CQgjbVGXv0DXgsztmfax6JWu8iYH3/export?format=xlsx ~~edit#gid=153628457~~
 
+## Fork the repo and deploy:
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FBnux256%2FHandasaimSchedule%2F&project-name=handasaim-schedule&repository-name=HandasaimSchedule)
+
+## Local development:
 To run locally with the Vercel CLI, easiest way to run the entire stack:
 (Must have Python and Node installed)
 ```
