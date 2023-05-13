@@ -1,18 +1,17 @@
 import openpyxl
+import requests
 import json
-import gdown
+from io import BytesIO
 
-# add conf.json
 XLSX_URL: str = r'https://docs.google.com/spreadsheets/d/1W5znKQixeRJeg_IwiLoUFN8cqcStC44L/export?format=xlsx'
-XLSX_FILENAME: str = 'schedule.xlsx'
 OUTPUT_FILE: str = "frontend/dist/schedule.json"
 TABLE_START: str = 'A5'
 DATE_CELL: str = "A3"
 
 
-def download_xlsx(url: str) -> None:
-    gdown.download(url=XLSX_URL, output=XLSX_FILENAME, fuzzy=True)
-    print(f'{XLSX_FILENAME} saved.')
+def download_xlsx(url: str) -> BytesIO:
+    # Downloading the file and return it as a file like object
+    return BytesIO(requests.get(XLSX_URL).content)
 
 
 def get_col(worksheet, starting_cell):
@@ -24,8 +23,8 @@ def get_row(worksheet, starting_cell):
 
 
 def main():
-    download_xlsx(XLSX_URL)
-    ws = openpyxl.load_workbook(filename=XLSX_FILENAME).worksheets[0]
+    xlsx_file = download_xlsx(XLSX_URL)
+    ws = openpyxl.load_workbook(filename=xlsx_file).worksheets[0]
     classes = get_row(worksheet=ws, starting_cell=ws[TABLE_START])
 
     hours = get_col(worksheet=ws, starting_cell=ws[TABLE_START])
